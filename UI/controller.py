@@ -50,4 +50,53 @@ class Controller:
             ft.Text(f"La componente connessa contenente l'oggetto con id {idOggetto} è composta di {sizeCompConn} nodi", color="green"))
         self._view.update_page()
 
+        # abilito l'utente a poter scegliere la lunghezza
+        self._view._ddLun.disabled = True
+        self._view._btnCerca.disabled = True
+
+        lunValues = range(2, sizeCompConn)
+
+        for v in lunValues:
+            self._view._ddLun.options.append(ft.Dropdown.Option(v))
+
+        # altro metodo, data una lista vecchia mi crea una lista nuova a cui applico una funzione
+        lunValuesDD = map(lambda x: ft.Dropdown.Option(x), lunValues)
+
+
+
+        self._view.update_page()
+
+
+    def handleCerca(self,e):
+        # mi basta chiamarlo semplicemente cosi perche i controlli
+        # sono stati fatti nella componente connessa
+        source = self._model.getNodeFromId(int(sef._view._txtIdOggetto.value))
+
+        if lun is None:
+            self._view.txt_result.controls.clear()
+            self._view.txt_result.controls.append(
+                ft.Text("Attenzione, selezionare un valore di lunghezza fra le scelte proposte"))
+            self._view.update_page()
+            return
+
+        lunInt = int(lun)
+
+        path, cost = self._model.getOptPath(source,lun)
+        self._view.txt_result.controls.clear()
+        self._view.txt_result.controls.append(
+            ft.Text(f"Ho trovato un camminio che parte da {source} e che ha un peso totale pari a {cost}"))
+        self._view.txt_result.controls.append(
+            ft.Text(f"Di seguito i nodi che compongono questo cammino:"))
+
+        for p in path:
+            self._view.txt_result.controls.append(ft.text(p))
+
+        self._view.update_page()
+
+
+
+
+
+
+
 
